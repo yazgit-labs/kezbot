@@ -1,0 +1,32 @@
+<launch>
+
+    <arg name="robot_name" value="turtle1" />
+    <param name="robot_name" type="str" value="turtle1" />
+
+<!-- TODO rosserial_python call here-->
+
+
+    <!-- Laser Node -->
+    <include file="$(find kezbot_v2)/launch/bringup_laser.launch">
+        <arg name="robot_name" value="$(arg robot_name)" />
+    </include>
+
+    <!-- Raspicam Node -->
+    <include file="$(find kezbot_v2)/launch/bringup_raspicam.launch">
+        <arg name="robot_name" value="$(arg robot_name)" />
+    </include>
+
+    <!-- Transform Broadcaster -->
+    <node pkg="kezbot_v2" type="kezbot_v2_tf_broadcaster"
+        args="/$(arg robot_name)" name="$(arg robot_name)_tf_broadcaster" />
+
+    <node pkg="tf" type="static_transform_publisher"
+        name="$(arg robot_name)_laser_tf_broadcaster"
+        args="0 0 0.15 0 0 0 1 $(arg robot_name) $(arg robot_name)/laser 100" />
+
+    <node pkg="tf" type="static_transform_publisher"
+        name="$(arg robot_name)_camera_tf_broadcaster"
+        args="0 0 0.10 0 0 0 1 $(arg robot_name) $(arg robot_name)/raspicam 100" />
+
+
+</launch>
