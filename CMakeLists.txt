@@ -6,6 +6,7 @@ project(kezbot_v2)
 
 find_package(catkin REQUIRED COMPONENTS
   geometry_msgs
+  nav_msgs
   joy
   roscpp
   rospy
@@ -42,8 +43,19 @@ include_directories(
 # rosserial_add_client_target(firmware main_firmware ALL)
 # rosserial_add_client_target(firmware main_firmware-upload)
 
+add_executable(kezbot_v2_sim_tf_broadcaster src/sim_tf_broadcaster.cpp)
+target_link_libraries(kezbot_v2_sim_tf_broadcaster ${catkin_LIBRARIES})
+
+add_executable(kezbot_v2_sim_odom_publisher src/sim_odom_publisher.cpp)
+target_link_libraries(kezbot_v2_sim_odom_publisher ${catkin_LIBRARIES})
+
+
+
 add_executable(kezbot_v2_tf_broadcaster src/tf_broadcaster.cpp)
 target_link_libraries(kezbot_v2_tf_broadcaster ${catkin_LIBRARIES})
+
+add_executable(kezbot_v2_odom_publisher src/odom_publisher.cpp)
+target_link_libraries(kezbot_v2_odom_publisher ${catkin_LIBRARIES})
 
 add_executable(kezbot_v2_teleop_joy src/teleop_joy.cpp)
 target_link_libraries(kezbot_v2_teleop_joy ${catkin_LIBRARIES})

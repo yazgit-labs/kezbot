@@ -1,13 +1,14 @@
 <launch>
 
-    <arg name="robot_name" default="turtle1" />
+    <arg name="robot_name" default="kezbot" />
 
     <node name="rplidar$(arg robot_name)"
         pkg="rplidar_ros"
         type="rplidarNode"
         output="screen">
 
-        <param name="serial_port"       type="string"   value="/dev/ttyUSB1" />
+<!-- TODO map the scan topic -->
+        <param name="serial_port"       type="string"   value="/dev/ttyUSB3" />
         <param name="serial_baudrate"   type="int"      value="115200" />
         <param name="frame_id"          type="string"   value="$(arg robot_name)/laser" />
         <param name="inverted"          type="bool"     value="false" />
