@@ -15,9 +15,9 @@
     </include>
 
     <!-- Raspicam Node -->
-    <include file="$(find kezbot_v2)/launch/bringup_raspicam.launch">
+    <!-- <include file="$(find kezbot_v2)/launch/bringup_raspicam.launch">
         <arg name="robot_name" value="$(arg robot_name)" />
-    </include>
+    </include> -->
 
     <!-- Transform Broadcaster -->
     <node pkg="kezbot_v2" type="kezbot_v2_tf_broadcaster"

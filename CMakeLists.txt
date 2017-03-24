@@ -4,20 +4,36 @@ project(kezbot_v2)
 ## Add support for C++11, supported in ROS Kinetic and newer
 # add_definitions(-std=c++11)
 
+set(RPLIDAR_SDK_PATH "./include/rplidar_sdk")
+
+
+# TODO fix problem for making rplidar_ros node
+FILE(GLOB RPLIDAR_SDK_SRC
+    "${RPLIDAR_SDK_PATH}/src/arch/linux/*.cpp"
+    "${RPLIDAR_SDK_PATH}/src/hal/*.cpp"
+    "${RPLIDAR_SDK_PATH}/src/*.cpp"
+)
+
 find_package(catkin REQUIRED COMPONENTS
   geometry_msgs
   nav_msgs
   joy
+  sensor_msgs
   roscpp
+  rosconsole
   rospy
   tf
   tf2
   turtlesim
   rosserial_arduino
   rosserial_client
-
 )
 
+include_directories(
+    ${RPLIDAR_SDK_PATH}/include
+    ${RPLIDAR_SDK_PATH}/src
+    ${catkin_INCLUDE_DIRS}
+)
 
 catkin_package(
 #  INCLUDE_DIRS include
@@ -26,9 +42,6 @@ catkin_package(
 #  DEPENDS system_lib
 )
 
-include_directories(
-	${catkin_INCLUDE_DIRS}
-)
 # TODO implement arduiono-cmake here
 # rosserial_generate_ros_lib(
 # 	PACKAGE rosserial_arduino
@@ -50,6 +63,10 @@ add_executable(kezbot_v2_sim_odom_publisher src/sim_odom_publisher.cpp)
 target_link_libraries(kezbot_v2_sim_odom_publisher ${catkin_LIBRARIES})
 
 
+
+
+add_executable(kezbot_v2_rplidar_node src/rplidar_node.cpp ${RPLIDAR_SDK_SRC})
+target_link_libraries(kezbot_v2_rplidar_node ${catkin_LIBRARIES})
 
 add_executable(kezbot_v2_tf_broadcaster src/tf_broadcaster.cpp)
 target_link_libraries(kezbot_v2_tf_broadcaster ${catkin_LIBRARIES})
