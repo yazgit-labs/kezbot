@@ -1,6 +1,6 @@
 <launch>
 
-    <arg name="robot_name" default="turtle1" />
+    <arg name="robot_name" default="kezbot" />
 
     <node type="raspicam_node"
         pkg="raspicam_node"

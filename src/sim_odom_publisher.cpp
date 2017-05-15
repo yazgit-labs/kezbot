@@ -1,17 +1,15 @@
 #include <ros/ros.h>
 #include <tf/transform_broadcaster.h>
 #include <nav_msgs/Odometry.h>
-
-#include <turtlesim/Pose.h>
-
+#include <geometry_msgs/Pose2D.h>
 
 std::string robot_name;
 
-turtlesim::Pose pose_data;
+geometry_msgs::Pose2D pose_data;
 
 ros::Time current_time, last_time;
 
-void poseCallback(const turtlesim::Pose::ConstPtr& msg){
+void poseCallback(const geometry_msgs::Pose2D::ConstPtr& msg){
     pose_data.x = msg->x;
     pose_data.y = msg->y;
     pose_data.theta = msg->theta;
