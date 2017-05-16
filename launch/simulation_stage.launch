@@ -1,36 +1,4 @@
 <launch>
-
-    <arg name="robot_name" value="kezbot" />
-    <param name="robot_name" type="str" value="kezbot" />
-
-    <!-- Stage Simulator -->
-    <node
-        name="stage_ros"
-        pkg="stage_ros"
-        type="stageros"
-        output="screen"
-        args="$(find kezbot_v2)/worlds/stage/one_robot.world">
-        
-        <remap from="/cmd_vel" to="$(arg robot_name)/cmd_vel" />
-        <remap from="/odom" to="$(arg robot_name)/odom" />
-        <remap from="/base_scan" to="$(arg robot_name)/base_scan" />
-        <remap from="/camera_info" to="$(arg robot_name)/camera_info" />
-        <remap from="/image" to="$(arg robot_name)/image" />
-        <remap from="/base_pose_ground_truth" to="$(arg robot_name)/odom" />
-
-
-    </node>
-
-    <!-- Teleop Node -->
-    <include file="$(find kezbot_v2)/launch/teleop_xbox.launch">
-        <arg name="robot_name" value="$(arg robot_name)" />
-    </include>
-
-    <!-- Transform Broadcaster -->
-    <node pkg="kezbot_v2" type="kezbot_v2_sim_tf_broadcaster"
-        args="/$(arg robot_name)" name="$(arg robot_name)_tf_broadcaster" />
-
-    <!-- rviz -->
-    <node pkg="rviz" type="rviz" name="rviz" args="-d $(find kezbot_v2)/rviz/view_kezbot.rviz" />
+    <include 
 
 </launch>
