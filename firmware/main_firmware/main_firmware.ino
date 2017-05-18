@@ -34,10 +34,10 @@ imu::Vector<3> gyro;
 int bnoRstPin = 26;
 
 //encoderPinSetup
-int encoderLA = 36;
-int encoderLB = 38;
-int encoderRA = 40;
-int encoderRB = 42;
+int encoderLA = 38;
+int encoderLB = 40;
+int encoderRA = 42;
+int encoderRB = 44;
 
 //object definitions
 Encoder leftEncoder(LEFT);
@@ -70,8 +70,8 @@ double theta = 1.57;
 
 void cmd_vel_handle( const geometry_msgs::Twist& msg);
 
-ros::Publisher pose2d_publisher("/kezbot/pose2d", &pose2d);
-ros::Subscriber<geometry_msgs::Twist> cmd_vel_subscriber("/kezbot/cmd_vel", &cmd_vel_handle );
+ros::Publisher pose2d_publisher("/pose2d", &pose2d);
+ros::Subscriber<geometry_msgs::Twist> cmd_vel_subscriber("/cmd_vel", &cmd_vel_handle );
 
 /*
     ------------- ROS ------------
@@ -105,7 +105,7 @@ void setup()
 
   //initialize bno055 absolute orientation sensor
   while (!bno.begin()) {
-    nh.logerror("Ooops, no BNO055 detected ... Check your wiring or I2C ADDR!");
+    nh.logerror("NO BNO055 detected. Check your wiring.");
     reset_BNO055();
   }
 
@@ -138,7 +138,7 @@ void loop()
   //correct the orientation
   pose2d.x = xVector / 10.0;
   pose2d.y = yVector / 10.0;
-  pose2d.theta = degToRad(map_func(event.orientation.x , 0 , 360 , 360 , 0));
+  pose2d.theta = degToRad(event.orientation.x);
   pose2d_publisher.publish( &pose2d );
 
   nh.spinOnce();

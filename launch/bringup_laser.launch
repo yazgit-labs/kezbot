@@ -8,7 +8,6 @@
         args="$(arg robot_name)"
         output="screen">
 
-<!-- TODO map the scan topic -->
         <param name="serial_port"       type="string"   value="/dev/ttyUSB1" />
         <param name="serial_baudrate"   type="int"      value="115200" />
         <param name="frame_id"          type="string"   value="$(arg robot_name)/laser" />
@@ -16,5 +15,10 @@
         <param name="angle_compensate"  type="bool"     value="true" />
 
     </node>
+    
+    <node pkg="tf" type="static_transform_publisher"                      
+        name="$(arg robot_name)_laser_tf_broadcaster"                     
+        args="0 0 0.15 0 0 0 1 $(arg robot_name)/base_link $(arg robot_name)/laser 100" />                                                          
+                                                                                      
 
 </launch>
