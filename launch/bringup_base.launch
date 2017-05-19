@@ -8,6 +8,8 @@
         <param name="baud" value="115200" />
         <remap from="/pose2d" to="/$(arg robot_name)/pose2d" />
         <remap from="/cmd_vel" to="/$(arg robot_name)/cmd_vel" />
+        <remap from="/pose" to="/$(arg robot_name)/pose" />
+        <remap from="/speed" to="/$(arg robot_name)/speed" />
     </node>
 
     <!-- Transform Broadcaster -->

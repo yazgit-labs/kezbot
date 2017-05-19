@@ -24,6 +24,7 @@
    ------------general variables--
 */
 
+// TODO modify CMakelists.txt to build and upload this code to the arduino due
 
 //servo pin setup
 int fwdServoPin = 6;

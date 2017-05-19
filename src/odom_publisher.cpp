@@ -2,18 +2,28 @@
 #include <tf/transform_broadcaster.h>
 #include <nav_msgs/Odometry.h>
 #include <geometry_msgs/Pose2D.h>
-
+#include <geometry_msgs/Pose.h>
+#include <geometry_msgs/Twist.h>
 
 
 std::string robot_name;
-geometry_msgs::Pose2D pose_data;
-
+geometry_msgs::Pose2D pose2d_data;
+geometry_msgs::Pose pose_data;
+geometry_msgs::Twist speed_data;
 ros::Time current_time, last_time;
 
-void poseCallback(const geometry_msgs::Pose2D::ConstPtr& msg){
-    pose_data.x = msg->x;
-    pose_data.y = msg->y;
-    pose_data.theta = msg->theta;
+void pose2dCallback(const geometry_msgs::Pose2D::ConstPtr& msg){
+    pose2d_data.x = msg->x;
+    pose2d_data.y = msg->y;
+    pose2d_data.theta = msg->theta;
+}
+
+void poseCallback(const geometry_msgs::Pose::ConstPtr& msg){
+    pose_data = *msg;
+}
+
+void speedCallback(const geometry_msgs::Twist::ConstPtr& msg){
+    // speed_data = msg;
 }
 
 
@@ -29,7 +39,9 @@ int main(int argc, char** argv){
     ros::NodeHandle n;
     ros::Rate r(100); // Hz
 
-    ros::Subscriber pose_sub = n.subscribe( robot_name+"/pose2d", 10, poseCallback);
+    ros::Subscriber pose2d_sub = n.subscribe( robot_name+"/pose2d", 10, pose2dCallback);
+    ros::Subscriber pose_sub = n.subscribe( robot_name+"/pose", 10, poseCallback);
+    ros::Subscriber speed_sub = n.subscribe( robot_name+"/speed", 10, speedCallback);
     ros::Publisher  odom_pub = n.advertise<nav_msgs::Odometry>(robot_name+"/odom", 50);
     tf::TransformBroadcaster odom_broadcaster;
 
@@ -37,9 +49,9 @@ int main(int argc, char** argv){
     current_time = ros::Time::now();
     last_time = ros::Time::now();
 
-    pose_data.x = 0;
-    pose_data.y = 0;
-    pose_data.theta = 0;
+    pose2d_data.x = 0;
+    pose2d_data.y = 0;
+    pose2d_data.theta = 0;
     double x = 0.0;
     double y = 0.0;
     double th = 0.0;
@@ -48,13 +60,15 @@ int main(int argc, char** argv){
     double vy = -0.1;
     double vth = 0.1;
 
+    pose_data.position.x = 0;
+    pose_data.position.y = 0;
 
     while(n.ok()){
         ros::spinOnce();               // check for incoming messages
         current_time = ros::Time::now();
-        x = pose_data.x;
-        y = pose_data.y;
-        th = pose_data.theta;
+        x = pose2d_data.x;
+        y = pose2d_data.y;
+        th = pose2d_data.theta;
 
         //since all odometry is 6DOF we'll need a quaternion created from yaw
         geometry_msgs::Quaternion odom_quat = tf::createQuaternionMsgFromYaw(th);
@@ -65,10 +79,16 @@ int main(int argc, char** argv){
         odom_trans.header.frame_id = "odom";
         odom_trans.child_frame_id = robot_name+"/base_link";
 
-        odom_trans.transform.translation.x = x;
-        odom_trans.transform.translation.y = y;
-        odom_trans.transform.translation.z = 0.0;
-        odom_trans.transform.rotation = odom_quat;
+        // odom_trans.transform.translation.x = x;
+        // odom_trans.transform.translation.y = y;
+        // odom_trans.transform.translation.z = 0.0;
+        // odom_trans.transform.rotation = odom_quat;
+        odom_trans.transform.translation.x = pose_data.position.x;
+        odom_trans.transform.translation.y = pose_data.position.y;
+        odom_trans.transform.translation.z = pose_data.position.z;
+        odom_trans.transform.rotation = pose_data.orientation;
+
+
 
         //send the transform
         odom_broadcaster.sendTransform(odom_trans);
@@ -77,20 +97,24 @@ int main(int argc, char** argv){
         nav_msgs::Odometry odom;
         odom.header.stamp = current_time;
         odom.header.frame_id = "odom";
+        odom.child_frame_id = robot_name+"/base_link";
 
         //set the position
-        odom.pose.pose.position.x = x;
-        odom.pose.pose.position.y = y;
-        odom.pose.pose.position.z = 0.0;
-        odom.pose.pose.orientation = odom_quat;
+        // odom.pose.pose.position.x = x;
+        // odom.pose.pose.position.y = y;
+        // odom.pose.pose.position.z = 0.0;
+        // odom.pose.pose.orientation = odom_quat;
 
         //set the velocity
-        odom.child_frame_id = robot_name+"/base_link";
-        odom.twist.twist.linear.x = vx;
-        odom.twist.twist.linear.y = vy;
-        odom.twist.twist.angular.z = vth;
+
+        // odom.twist.twist.linear.x = vx;
+        // odom.twist.twist.linear.y = vy;
+        // odom.twist.twist.angular.z = vth;
 
         //publish the message
+
+        odom.pose.pose = pose_data;
+
         odom_pub.publish(odom);
 
         last_time = current_time;
