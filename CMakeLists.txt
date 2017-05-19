@@ -24,7 +24,6 @@ find_package(catkin REQUIRED COMPONENTS
   rospy
   tf
   tf2
-  turtlesim
   rosserial_arduino
   rosserial_client
 )

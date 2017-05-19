@@ -47,7 +47,6 @@
   <build_depend>rospy</build_depend>
   <build_depend>tf</build_depend>
   <build_depend>tf2</build_depend>
-  <build_depend>turtlesim</build_depend>
   <build_depend>rosserial_client</build_depend>
   <build_depend>rosserial_arduino</build_depend>
   <build_depend>rplidar_ros</build_depend>
@@ -62,7 +61,6 @@
   <run_depend>rospy</run_depend>
   <run_depend>tf</run_depend>
   <run_depend>tf2</run_depend>
-  <run_depend>turtlesim</run_depend>
   <run_depend>rosserial_client</run_depend>
   <run_depend>rosserial_arduino</run_depend>
   <run_depend>sensor_msgs</run_depend>
