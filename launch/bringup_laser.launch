@@ -15,10 +15,10 @@
         <param name="angle_compensate"  type="bool"     value="true" />
 
     </node>
-    
-    <node pkg="tf" type="static_transform_publisher"                      
-        name="$(arg robot_name)_laser_tf_broadcaster"                     
-        args="0 0 0.15 0 0 0 1 $(arg robot_name)/base_link $(arg robot_name)/laser 100" />                                                          
+
+    <node pkg="tf" type="static_transform_publisher"
+        name="$(arg robot_name)_laser_tf_broadcaster"
+        args="0 0 0.15 0 0 0 1 $(arg robot_name)/base_link $(arg robot_name)/laser 100" />
                                                                                       
 
 </launch>

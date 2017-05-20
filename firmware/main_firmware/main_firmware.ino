@@ -144,7 +144,7 @@ void loop()
   sensors_event_t event;
   bno.getEvent(&event);
   quat = bno.getQuat();
-
+  quat.normalize();
 //  imu::Vector<3> vec(0.0, 0.0, 1.0);
 //  quat.rotateVector(vec);
   yVector = yVector + dWay * sin(degToRad(map_func(event.orientation.x,0,360,360,0)));
