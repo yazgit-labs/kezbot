@@ -1,0 +1,8 @@
+<launch>
+
+    <arg name="robot_name" default="kezbot" />
+
+    <node pkg="amcl" type="amcl" name="$(arg robot_name)_amcl" 
+        args="scan:=/$(arg robot_name)/base_scan" />
+
+</launch>

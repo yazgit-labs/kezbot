@@ -1,0 +1,12 @@
+<launch>
+
+    <arg name="robot_name" default="kezbot" />
+
+    <node pkg="gmapping"
+        type="slam_gmapping"
+        name="gmapping_$(arg robot_name)"
+        args="scan:=/(arg robot_name)/base_scan _base_frame:=/$(arg robot_name)/base_link"
+        >
+    </node>
+
+</launch>
