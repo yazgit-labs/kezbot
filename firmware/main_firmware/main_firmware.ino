@@ -43,10 +43,10 @@ imu::Quaternion quat;
 
 
 //encoderPinSetup
-int encoderLA = 38;
-int encoderLB = 40;
-int encoderRA = 42;
-int encoderRB = 44;
+int encoderLA = 36;
+int encoderLB = 38;
+int encoderRA = 40;
+int encoderRB = 42;
 
 //object definitions
 Encoder leftEncoder(LEFT);
