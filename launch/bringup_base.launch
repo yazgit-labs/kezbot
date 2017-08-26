@@ -4,7 +4,7 @@
     <param name="robot_name" type="str" value="kezbot" />
 
     <node pkg="rosserial_python" type="serial_node.py" name="$(arg robot_name)_bringup">
-        <param name="port" value="/dev/ttyACM0" />
+        <param name="port" value="/dev/kezbot_arduino" />
         <param name="baud" value="115200" />
         <remap from="/pose2d" to="/$(arg robot_name)/pose2d" />
         <remap from="/cmd_vel" to="/$(arg robot_name)/cmd_vel" />
