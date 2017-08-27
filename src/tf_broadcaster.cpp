@@ -6,27 +6,14 @@
 
 std::string robot_name;
 
-void poseCallback(const geometry_msgs::Pose& msg){
-    static tf::TransformBroadcaster br;
-    tf::Transform transform;
-    transform.setOrigin(tf::Vector3(msg.position.x, msg.position.y, 0.0) );
-    tf::Quaternion q(
-        tfScalar(msg.orientation.x),
-        tfScalar(msg.orientation.y),
-        tfScalar(msg.orientation.z),
-        tfScalar(msg.orientation.w)
-    );
-    transform.setRotation(q);
-
-    br.sendTransform(
-        tf::StampedTransform(
-            transform,
-            ros::Time::now(),
-            "odom",
-            robot_name+"/base_link"
-        )
-    );
-
+void poseCallback(const geometry_msgs::Pose2D& msg){
+  static tf::TransformBroadcaster br;
+  tf::Transform transform;
+  transform.setOrigin( tf::Vector3(msg.x, msg.y, 0.0) );
+  tf::Quaternion q;
+  q.setRPY(0, 0, msg.theta);
+  transform.setRotation(q);
+  br.sendTransform(tf::StampedTransform(transform, ros::Time::now(), "odom", robot_name));
 }
 
 int main(int argc, char **argv){
@@ -38,7 +25,7 @@ int main(int argc, char **argv){
     robot_name = argv[1];
 
     ros::NodeHandle node;
-    ros::Subscriber sub = node.subscribe(robot_name+"/pose", 10, &poseCallback);
+    ros::Subscriber sub = node.subscribe(robot_name+"/pose2d", 10, &poseCallback);
 
     ros::spin();
     return 0;

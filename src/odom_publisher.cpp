@@ -79,14 +79,14 @@ int main(int argc, char** argv){
         odom_trans.header.frame_id = "odom";
         odom_trans.child_frame_id = robot_name+"/base_link";
 
-        // odom_trans.transform.translation.x = x;
-        // odom_trans.transform.translation.y = y;
-        // odom_trans.transform.translation.z = 0.0;
-        // odom_trans.transform.rotation = odom_quat;
-        odom_trans.transform.translation.x = pose_data.position.x;
-        odom_trans.transform.translation.y = pose_data.position.y;
-        odom_trans.transform.translation.z = pose_data.position.z;
-        odom_trans.transform.rotation = pose_data.orientation;
+         odom_trans.transform.translation.x = x;
+         odom_trans.transform.translation.y = y;
+         odom_trans.transform.translation.z = 0.0;
+         odom_trans.transform.rotation = odom_quat;
+//        odom_trans.transform.translation.x = pose_data.position.x;
+//        odom_trans.transform.translation.y = pose_data.position.y;
+//        odom_trans.transform.translation.z = pose_data.position.z;
+//        odom_trans.transform.rotation = pose_data.orientation;
 
 
 
@@ -113,7 +113,11 @@ int main(int argc, char** argv){
 
         //publish the message
 
-        odom.pose.pose = pose_data;
+//        odom.pose.pose = pose_data;
+        odom.pose.pose.position.x = pose2d_data.x;
+        odom.pose.pose.position.y = pose2d_data.y;
+        odom.pose.pose.position.z = 0.0;
+        odom.pose.pose.orientation = odom_quat;
 
         odom_pub.publish(odom);
 
