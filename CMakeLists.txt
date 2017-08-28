@@ -59,9 +59,6 @@ catkin_package(
 add_executable(kezbot_v2_rplidar_node src/rplidar_node.cpp ${RPLIDAR_SDK_SRC})
 target_link_libraries(kezbot_v2_rplidar_node ${catkin_LIBRARIES})
 
-add_executable(kezbot_v2_tf_broadcaster src/tf_broadcaster.cpp)
-target_link_libraries(kezbot_v2_tf_broadcaster ${catkin_LIBRARIES})
-
 add_executable(kezbot_v2_odom_publisher src/odom_publisher.cpp)
 target_link_libraries(kezbot_v2_odom_publisher ${catkin_LIBRARIES})
 
