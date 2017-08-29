@@ -72,7 +72,7 @@ floorplan
 ( 
   name "one_robot"
   bitmap "basic_floor.pgm"
-  size [ 40.00 40.00 1.00]
+  size [ 20.00 20.00 1.00]
   pose [ 0.000 0.000 0.000 0.000 ]
 )
 
