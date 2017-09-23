@@ -9,7 +9,7 @@
         <param name="base_watchdog_timeout" value="0.5"/>
         <remap from="odom" to="odom"/>
         <remap from="base_pose_ground_truth" to="base_pose_ground_truth"/>
-        <remap from="base_scan" to="scan"/>
+        <remap from="base_scan" to="base_scan"/>
     </node>
 
 </launch>
