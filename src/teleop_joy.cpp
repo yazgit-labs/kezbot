@@ -31,7 +31,7 @@ TeleopRobot::TeleopRobot():
   nh_.param("axis_angular", angular_, angular_);
   nh_.param("scale_angular", a_scale_, a_scale_);
   nh_.param("scale_linear", l_scale_, l_scale_);
-  nh_.getParam("robot_name",robot_name);
+  nh_.param("robot_name",robot_name, std::string("kezbot"));
 
 
   vel_pub_ = nh_.advertise<geometry_msgs::Twist>(robot_name+"/cmd_vel", 1);
