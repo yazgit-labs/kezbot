@@ -1,0 +1,6 @@
+<launch>
+
+    <!-- RVIZ robot visualtion utility -->
+    <node pkg="rviz" type="rviz" name="rviz" args="-d $(find mrb_1_bringup)/rviz/view_mrb_1.rviz" />    
+
+</launch>

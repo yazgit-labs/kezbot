@@ -1,0 +1,5 @@
+<launch>
+
+  <node pkg="mrb_1_rplidar" name="mrb_1_rplidar" type="mrb_1_rplidar" />
+
+</launch>

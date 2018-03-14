@@ -1,0 +1,57 @@
+<?xml version='1.0'?>
+<robot name="mrb_1" xmlns:xacro="http://ros.org/wiki/xacro">
+
+    <xacro:include filename="$(find mrb_1_description)/urdf/xacro/mrb_1_body.xacro" />
+    <xacro:include filename="$(find mrb_1_description)/urdf/xacro/mrb_1_wheel.xacro" />
+    <xacro:include filename="$(find mrb_1_description)/urdf/xacro/mrb_1_lid.xacro" />
+    <xacro:include filename="$(find mrb_1_description)/urdf/laser/hokuyo.xacro" />
+
+    <xacro:mrb_1_body prefix="base_link" />
+	
+    <xacro:mrb_1_wheel 
+    	prefix="front" suffix="left"  
+    	xyz=" 0.09  0.137 0" rpy="0 0 0" 
+    	radius="0.055" 
+    	parent="base_link"
+    	/>
+    <xacro:mrb_1_wheel 
+    	prefix="front" suffix="right" 
+    	xyz=" 0.09 -0.137 0" rpy="0 0 0" 
+    	radius="0.055" 
+		  parent="base_link"
+    	/>
+    <xacro:mrb_1_wheel 
+    	prefix="rear" suffix="left"   
+    	xyz="-0.09  0.137 0" rpy="0 0 0" 
+    	radius="0.055" 
+		  parent="base_link"
+    	/>
+    <xacro:mrb_1_wheel 
+    	prefix="rear" suffix="right"  
+    	xyz="-0.09 -0.137 0" rpy="0 0 0" 
+    	radius="0.055" 
+		  parent="base_link"
+    	/>
+
+    <xacro:mrb_1_lid
+    	prefix="upper"
+    	xyz="0 0 0.0725"
+    	parent="base_link"
+    	/>
+
+
+    <xacro:laser
+      name="base_scan"
+      parent="upper_lid"
+      xyz="0.0 0.0 0.02" rpy="0 0 0"
+      meshes="package://mrb_1_description/meshes/laser/"
+      /> 
+
+    <gazebo>
+        <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
+        </plugin>
+    </gazebo>
+
+
+
+</robot>

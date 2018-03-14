@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<launch>
+
+  <arg name="robot_name" default="mrb_1"/>
+
+  <param name="robot_description" 
+    command="$(find xacro)/xacro --inorder '$(find mrb_1_description)/urdf/mrb_1.xacro'"/>
+  <node name="mrb_1_spawn" pkg="gazebo_ros" type="spawn_model" output="screen"
+    args="-urdf -param robot_description -model mrb_1">
+  </node>
+
+  <node pkg="robot_state_publisher"
+    type="robot_state_publisher"
+    name="robot_state_publisher"
+    >
+    <param name="publish_frequency" type="double" value="30.0" />
+  </node>
+
+</launch>
