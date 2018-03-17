@@ -1,0 +1,11 @@
+<launch>
+
+  <arg name="robot_name" default="mirBeta"/>
+
+  <group ns="$(arg robot_name)">
+    <include file="$(find mirBeta_odometry)/launch/include/mirBeta_odometry.launch.xml">
+      <arg name="robot_name" value="$(arg robot_name)" />
+    </include>
+  </group>
+
+</launch>

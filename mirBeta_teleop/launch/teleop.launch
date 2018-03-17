@@ -1,0 +1,10 @@
+<launch>
+
+
+  <arg name="robot_name" default="mirBeta" />
+
+  <group ns="$(arg robot_name)">
+    <include file="$(find mirBeta_teleop)/launch/includes/xbox.launch.xml"></include>
+  </group>
+
+</launch>
