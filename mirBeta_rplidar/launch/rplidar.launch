@@ -1,0 +1,5 @@
+<launch>
+
+  <node pkg="mirBeta_rplidar" name="mirBeta_rplidar" type="mirBeta_rplidar" />
+
+</launch>
